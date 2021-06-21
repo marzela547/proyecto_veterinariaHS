@@ -1,33 +1,87 @@
 const Clientes = require('../models/clientesmodelo');
 
-const TipoProductos = require('../models/tipoproductosmodelo');
+exports.iniciarSesion = async(req, res)=> {
+    const valida = validationResult(req); 
 
-exports.iniciarSesion = async(req, res)=>{
-
-    const {correo, contrasena} = req.body;
-    const buscar = await Clientes.findOne({
-        where: { //Le mandamos la condición WHERE
-            correo: correo, //Comparamos correo, contraseña y si el usuario está activo, esa son las condiciones del WHERE
-            contrasena: contrasena,
-            activo: true
-        }
-    });
-
-    if(buscar){ //Verificamos si encontró al usuario o no
-        console.log("Usuario existe"); //Si lo encontró, le mandamos a imprimir en la consola este mensaje
-    }else{
-        console.log("Usuario no existe"); //Y si no lo encontró, le mandamos a imprimir en la consola este mensaje este otro
-    }
-};
-
-exports.listatipoproductos= async (req, res) => { //Aqui pasa lo mismo que arriba, declaramos la función
-    var mensajes = { //declaramos un objeto con diferentes campos como el estado que retornará la consulta, el mensaje que 
-                    //se mostrará y el arreglo que obtuvo de la consulta
-        estado: 200,
+    var mensajes = {
         mensaje: "Datos procesados correctamente",
         data: []
     };
-    var listaUsuario = await TipoProductos.findAll(); //Aquí mandamos a pedir todos los datos de la tabla TipoProductos
-    mensajes.data = listaUsuario; //Aquí le ingresamos esos al objeto con id de data
-    res.status(200).json(mensajes); //Devolvemos el objeto mensaje
+
+    if(!valida.isEmpty()){
+        mensajes.mensaje="Los datos ingresados no son válidos";
+        mensajes.data= valida.array();
+        return res.status(200).json(mensajes);
+    }
+    else{
+        const {correo, contrasenia} = req.body;
+        console.log(req.body);
+        const buscar = await Clientes.findOne({
+            where: {
+                correo:correo,
+                activo: true
+            }
+        });
+        if(buscar){
+            mensajes.mensaje="El usuario si existe";
+            res.status(200).json(mensajes);
+
+        }else{
+            mensajes.mensaje="Error";
+            res.status(200).json(mensajes);
+        }
+    }
+};
+
+exports.regristrarCliente = async (req, res) => {
+    const {Nom_cliente, Tel_cliente, Correo_cliente, Contrasenia, Direc_cliente} = req.body;
+    var mensajes = {
+        estado: 200,
+        mensaje: "Datos ingresados correctamente",
+        data: []
+    };
+
+    if(Nom_cliente && Tel_cliente && Correo_cliente && Contrasenia && Direc_cliente){
+
+        var agregarCliente = await Clientes.create({
+            Nom_cliente: Nom_cliente,
+            Tel_cliente: Tel_cliente,
+            Correo_cliente,
+            Contrasenia: Contrasenia,
+            Direc_cliente: Direc_cliente
+        });
+        mensajes.data=agregarCliente;
+        res.status(200).json(mensajes);
+    }
+    else{
+        mensajes.mensaje="Faltan algunos datos necesarios";
+        res.status(200).json(mensajes);
+    }
+};
+
+exports.actualizarContrasenia = async (req, res) => {
+    const {id }=req.params;
+    const {Contrasenia1, Contrasenia2} = req.body;
+    var mensajes = {
+        estado: 200,
+        mensaje: "Contraseña actualizada",
+        data: []
+    };
+
+    if(Contrasenia1 && Contrasenia2){
+
+        var actualizarContra = await Clientes.update({
+            Nom_cliente: Nom_cliente,
+            Tel_cliente: Tel_cliente,
+            Correo_cliente,
+            Contrasenia: Contrasenia,
+            Direc_cliente: Direc_cliente
+        });
+        mensajes.data=agregarCliente;
+        res.status(200).json(mensajes);
+    }
+    else{
+        mensajes.mensaje="Faltan algunos datos necesarios";
+        res.status(200).json(mensajes);
+    }
 };
