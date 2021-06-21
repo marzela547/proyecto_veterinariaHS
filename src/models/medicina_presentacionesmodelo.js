@@ -9,7 +9,6 @@ const  medicina_presentaciones = db.define(
         primaryKey: true,
         autoIncrement: false,
         allowNull: false
-        
     },
     Id_presentacion: {
         type: Sequelize.INTEGER,
@@ -17,7 +16,7 @@ const  medicina_presentaciones = db.define(
         autoIncrement: false,
         allowNull: false
 
-    }  
+    }
 },
  {
      tableName: "medicina_presentaciones",

@@ -8,7 +8,7 @@ const  productos = db.define(
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    allowNull: false 
+    allowNull: false
 
  },
  Descrip_producto: {
@@ -17,7 +17,7 @@ const  productos = db.define(
 
  },
  Expiracion: {
-    type: sequelize.STRING(50), //hay que cambiarlo pk no se la variable
+    type: sequelize.DATE, //hay que cambiarlo pk no se la variable
     alloNull: true
 
  },
@@ -31,7 +31,7 @@ const  productos = db.define(
     alloNull: false
  },
  Activo: {
-    type: sequelize.STRING(50),//hay que cambiarlo pk no se la variable
+    type: sequelize.BOOLEAN,//hay que cambiarlo pk no se la variable
     alloNull: false
 
  }
