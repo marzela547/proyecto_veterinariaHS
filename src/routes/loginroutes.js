@@ -25,6 +25,6 @@ router.post('/',  body('Correo_cliente').isEmail().withMessage('Formato de corre
                 }
             ).withMessage('El correo ya se encuentra en uso'), controladorlogin.regristrarCliente);
 
-
+router.post('/login', body('Contrasenia').isLength({min: 8}).withMessage("Contraseña debe tener mínimo 8 caracteres"), controladorlogin.actualizarContrasenia );
 
 module.exports=router;

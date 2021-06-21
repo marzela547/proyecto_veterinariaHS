@@ -1,4 +1,5 @@
 const Clientes = require('../models/clientesmodelo');
+import emailjs from 'emailjs-com';
 
 exports.iniciarSesion = async(req, res)=> {
     const valida = validationResult(req); 
@@ -68,16 +69,17 @@ exports.actualizarContrasenia = async (req, res) => {
         data: []
     };
 
-    if(Contrasenia1 && Contrasenia2){
+    if(Contrasenia1 && Contrasenia2 && Contrasenia1 === Contrasenia2){
 
         var actualizarContra = await Clientes.update({
-            Nom_cliente: Nom_cliente,
-            Tel_cliente: Tel_cliente,
-            Correo_cliente,
-            Contrasenia: Contrasenia,
-            Direc_cliente: Direc_cliente
+            Contrasenia: Contrasenia1
+        },
+        {
+            where:{
+                id:Id_cliente
+            }
         });
-        mensajes.data=agregarCliente;
+        mensajes.data=actualizarContra;
         res.status(200).json(mensajes);
     }
     else{
@@ -85,3 +87,10 @@ exports.actualizarContrasenia = async (req, res) => {
         res.status(200).json(mensajes);
     }
 };
+
+emailjs.sendForm('service_s44mx25', 'template_wph7492', '#noidea')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+});
