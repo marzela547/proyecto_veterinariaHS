@@ -1,19 +1,17 @@
-const Clientes = require('../models/clientesmodelo'); //se manda a traer el modelo de la tabla que se va a ocupar
+const Clientes = require('../models/clientesmodelo');
 
 const TipoProductos = require('../models/tipoproductosmodelo');
 
-exports.iniciarSesion = async(req, res)=>{ //Aqui se declara la función que nosotros utilizaremos para hacer las consultas
+exports.iniciarSesion = async(req, res)=>{
 
-    const {correo, contrasena} = req.body; //Declaramos un objeto (supongamos que es objeto xd) el cual recibirá los datos que nosotros
-                                          //le mandamos por medio de la aplicación (el postman en este caso)
-
-    const buscar = await Clientes.findOne({ //aquí hacemos la consulta a la tabla y le pedimos que nos traiga UN SOLO usuario
+    const {correo, contrasena} = req.body;
+    const buscar = await Clientes.findOne({
         where: { //Le mandamos la condición WHERE
             correo: correo, //Comparamos correo, contraseña y si el usuario está activo, esa son las condiciones del WHERE
             contrasena: contrasena,
             activo: true
         }
-    })
+    });
 
     if(buscar){ //Verificamos si encontró al usuario o no
         console.log("Usuario existe"); //Si lo encontró, le mandamos a imprimir en la consola este mensaje
