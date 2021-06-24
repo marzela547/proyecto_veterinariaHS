@@ -87,10 +87,10 @@ exports.actualizarContrasenia = async (req, res) => {
         res.status(200).json(mensajes);
     }
 };
-
+/*
 emailjs.sendForm('service_s44mx25', 'template_wph7492', '#noidea')
       .then((result) => {
           console.log(result.text);
       }, (error) => {
           console.log(error.text);
-});
+});*/

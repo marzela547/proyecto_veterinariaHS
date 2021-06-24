@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const base = new Sequelize(
-    'vethuellitasdesol', //base de datos
-    'movil', //usuario
-    'Movil2', //contraseña
+    process.env.MYSQL_DB, //base de datos
+    process.env.MYSQL_USUARIO, //usuario
+    process.env.MYSQL_CONTRASENA, //contraseña
     {
         host: 'localhost', //servidor
         dialect: 'mysql', //DBMS
