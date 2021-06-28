@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
-const sequelize  = require('sequelize');
-const db=require('../config/db');
+const db=require('../config/conexionbd');
 const Medicina=db.define(
     "medicinas",
     {
@@ -9,7 +8,7 @@ const Medicina=db.define(
             primarykey:true,
             autoIncrement: true,
             allowNull: false,
-        }, 
+        },
         Descrip_medicina:{
             type: Sequelize.VARCHAR(50),
             allowNull: false,

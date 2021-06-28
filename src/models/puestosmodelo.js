@@ -1,16 +1,18 @@
 const { Sequelize } = require('sequelize');
-const sequelize = require('sequelize');
-const bd = require('../config/conexionbd');
+const db = require('../config/conexionbd');
 const  puestos = db.define(
 "puestos",
 {
     Id_puesto: {
-
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
 
     },
     Descrip_puesto:
     {
-        type: sequelize.STRING(50),
+        type: Sequelize.STRING(50),
         alloNull: false
     }
 

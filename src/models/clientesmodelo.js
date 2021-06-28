@@ -1,7 +1,7 @@
-const { Sequelize } = require('sequelize');
+
 const Sequelize  = require('sequelize');
 const bcrypt = require('bcrypt');
-const db=require('../config/db');
+const db=require('../config/conexionbd');
 const Clientes=db.define(
     "clientes",
     {
@@ -18,26 +18,26 @@ const Clientes=db.define(
             },
         },
         Nom_cliente:{
-            type: Sequelize.VARCHAR(45),
+            type: Sequelize.STRING(45),
             allowNull: false,
         },
         Tel_cliente:{
-            type: Sequelize.VARCHAR(12),
+            type: Sequelize.STRING(12),
             allowNull: false,
 
         },
         Correo_cliente:{
-            type: Sequelize.VARCHAR(100),
+            type: Sequelize.STRING(100),
             allowNull: false,
         },
 
         Contrasenia:{
-            type: Sequelize.VARCHAR(250),
+            type: Sequelize.STRING(250),
             allowNull: false,
 
         },
         Direc_cliente:{
-            type: Sequelize.VARCHAR(250),
+            type: Sequelize.STRING(250),
             allowNull: false,
 
         },

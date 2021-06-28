@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
-const sequelize  = require('sequelize');
-const db=require('../config/db');
+const db=require('../config/conexionbd');
 const Mascotas=db.define(
     "mascotas",
     {

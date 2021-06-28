@@ -1,6 +1,6 @@
-const { Sequelize } = require('sequelize');
-const sequelize  = require('sequelize');
-const db=require('../config/db');
+
+const Sequelize  = require('sequelize');
+const db=require('../config/conexionbd');
 const Empleados=db.define(
     "empleados",
     {
@@ -9,7 +9,7 @@ const Empleados=db.define(
             primarykey:true,
             autoIncrement: true,
             allowNull: false,
-        }, 
+        },
         Nom_empleado:{
             type: Sequelize.VARCHAR(45),
             allowNull: false,

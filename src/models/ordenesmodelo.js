@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
-const sequelize = require('sequelize');
-const bd = require('../config/conexionbd');
+const db = require('../config/conexionbd');
 const  ordenes = db.define(
 "ordenes",
 {
@@ -18,6 +17,11 @@ Anotaciones: {
 Id_cliente:{
     type: sequelize.INTEGER,
     alloNull: false,
+    references: {
+        model: clientes,
+        key: 'Id_cliente',
+        deferrable: Deferrable.INITIALLY_IMMEDIATE
+    }
 },
 Subtotal: {
     type: sequelize.DOUBLE,

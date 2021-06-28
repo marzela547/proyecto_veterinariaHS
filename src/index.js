@@ -9,7 +9,7 @@ app.use(express.json());
 app.set('json spaces', 2);
 app.use(express.urlencoded({extended: false}));
 //app.use(require('./routes/index'));
-//app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/login', require('./routes/loginroutes'));
 //app.use('/api/empleados', require('./routes/empleados'));
 
 app.listen(app.get('port'), ()=>{

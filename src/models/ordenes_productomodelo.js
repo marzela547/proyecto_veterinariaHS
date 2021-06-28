@@ -1,20 +1,27 @@
 const { Sequelize } = require('sequelize');
-const sequelize = require('sequelize');
-const bd = require('../config/conexionbd');
+const db=require('../config/conexionbd');
 const  ordenes_producto = db.define(
 "ordenes_producto",
 {
 Id_orden:{
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: false,
-    allowNull: false
+    allowNull: false,
+    references: {
+        model: ordenes,
+        key: 'Id_orden',
+        deferrable: Deferrable.INITIALLY_IMMEDIATE
+    }
 },
 Id_producto: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: false,
-    allowNull: false
+    allowNull: false,
+    references: {
+        model: productos,
+        key: 'Id_producto',
+        deferrable: Deferrable.INITIALLY_IMMEDIATE
+    }
 
 },
 Cantidad: {

@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
-const sequelize  = require('sequelize');
-const db=require('../config/db');
+const db=require('../config/conexionbd');
 const Citas=db.define(
     "citas",
     {
@@ -9,7 +8,7 @@ const Citas=db.define(
             primarykey:true,
             autoIncrement: true,
             allowNull: false,
-        }, 
+        },
         Fecha_cita:{
             type: Sequelize.DATETIME,
             allowNull: false,

@@ -3,6 +3,7 @@ const controladorlogin = require('../controllers/logincontroller');
 const Cliente = require('../models/clientesmodelo');
 const {body } = require('express-validator');
 const router = Router();
+router.get('/',controladorlogin.lista);
 router.post('/login', body('Correo_cliente').isEmail().withMessage('Formato de correo inválido'),
             body('Contrasenia').isLength({min: 8}).withMessage("Contraseña debe tener mínimo 8 caracteres"), controladorlogin.iniciarSesion );
 

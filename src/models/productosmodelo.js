@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
-const sequelize = require('sequelize');
-const bd = require('../config/conexionbd');
+const db = require('../config/conexionbd');
 const  productos = db.define(
 "productos",
 {
@@ -28,7 +27,12 @@ const  productos = db.define(
  },
  Id_marca: {
     type: sequelize.INTEGER,
-    alloNull: false
+    alloNull: false,
+    references: {
+      model: marcas,
+      key: 'Id_marca',
+      deferrable: Deferrable.INITIALLY_IMMEDIATE
+  }
  },
  Activo: {
     type: sequelize.BOOLEAN,//hay que cambiarlo pk no se la variable

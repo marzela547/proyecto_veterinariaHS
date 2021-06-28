@@ -1,5 +1,20 @@
 const Clientes = require('../models/clientesmodelo');
-import emailjs from 'emailjs-com';
+var numale=Math.random();
+
+//import emailjs from 'emailjs-com';
+
+
+function random(min, max){
+    return Math.floor((Math.random() * (max - min + 1)) + min);
+
+}
+
+exports.lista= async(req, res) =>{
+
+    var lis = await Clientes.findAll();
+    res.json(lis);
+};
+console.log(random(1,20));
 
 exports.iniciarSesion = async(req, res)=> {
     const valida = validationResult(req); 
@@ -87,6 +102,7 @@ exports.actualizarContrasenia = async (req, res) => {
         res.status(200).json(mensajes);
     }
 };
+
 /*
 emailjs.sendForm('service_s44mx25', 'template_wph7492', '#noidea')
       .then((result) => {
