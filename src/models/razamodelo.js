@@ -15,12 +15,8 @@ const Razas = bd.define(
         },
         Id_tipo_mascotas: {
             type: Sequelize.INTEGER,
-            allowNull: false,
-            references: {
-                model: mascotas,
-                key: 'Id_tipo_mascotas',
-                deferrable: Deferrable.INITIALLY_IMMEDIATE
-            }
+            foreignKey: true,
+            allowNull: false
         }
     },
     {

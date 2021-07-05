@@ -1,26 +1,34 @@
 const Clientes = require('../models/clientesmodelo');
-var numale=Math.random();
-
-//import emailjs from 'emailjs-com';
-
-
-function random(min, max){
-    return Math.floor((Math.random() * (max - min + 1)) + min);
-
-}
+const { validationResult } = require('express-validator');
+const EnviarCorreo = require('../config/correo');
 
 exports.lista= async(req, res) =>{
 
-    var lis = await Clientes.findAll();
-    res.json(lis);
+    var mensajes = {
+        mensaje: "",
+        data: []
+    };
+
+    const buscar = await Clientes.findAll();
+
+    if(buscar){
+        mensajes.mensaje="Holis";
+        mensajes.data = buscar;
+        res.status(200).json(mensajes);
+
+    }else{
+        //
+        mensajes.mensaje="Fallaste panita";
+        res.status(200).json(mensajes);
+    }
+
 };
-console.log(random(1,20));
 
 exports.iniciarSesion = async(req, res)=> {
-    const valida = validationResult(req); 
+   const valida = validationResult(req);
 
     var mensajes = {
-        mensaje: "Datos procesados correctamente",
+        mensaje: "",
         data: []
     };
 
@@ -28,14 +36,130 @@ exports.iniciarSesion = async(req, res)=> {
         mensajes.mensaje="Los datos ingresados no son válidos";
         mensajes.data= valida.array();
         return res.status(200).json(mensajes);
+   }
+        return next(req,mensajes);
+};
+
+exports.regristrarCliente = async (req, res) => {
+    const valida = validationResult(req);
+
+    var mensajes = {
+        mensaje: "",
+        data: []
+    };
+
+    if(!valida.isEmpty()){
+        mensajes.mensaje="Los datos ingresados no son válidos";
+        mensajes.data= valida.array();
+        return res.status(200).json(mensajes);
+   }else{
+        const {Nom_cliente, Tel_cliente, Correo_cliente, Contrasenia, Direc_cliente} = req.body;
+
+        if(Nom_cliente && Tel_cliente && Correo_cliente && Contrasenia && Direc_cliente){
+
+            var agregarCliente = await Clientes.create({
+                Nom_cliente: Nom_cliente,
+                Tel_cliente: Tel_cliente,
+                Correo_cliente: Correo_cliente,
+                Contrasenia: Contrasenia,
+                Direc_cliente: Direc_cliente
+            });
+
+            if(agregarCliente){
+                mensajes.mensaje="Usuario agregado correctamente";
+                res.status(200).json(mensajes);
+            }else{
+                mensajes.mensaje="Errror al agregar el usuario";
+                res.status(200).json(mensajes);
+            }
+        }
+        else{
+            mensajes.mensaje="Faltan algunos datos necesarios";
+            res.status(200).json(mensajes);
+        }
+   }
+};
+
+exports.enviarCodigo = async (req, res) =>{
+    //const valida = validationResult(req);
+    var mensajes = {
+        mensaje: "",
+        data: []
+    };
+
+    const {correo} = req.body;
+
+    const buscar = await Clientes.findOne({
+        where: {
+            Correo_cliente: correo,
+            Activo: "ACT"
+        }
+    });
+
+    const data ={
+        correo: buscar.Correo_cliente
     }
-    else{
-        const {correo, contrasenia} = req.body;
-        console.log(req.body);
+
+    EnviarCorreo.recuperarContrasena(data);
+    res.send("Correo enviado");
+}
+
+exports.envioCodigo = async(req, res)=>{
+    const codigo = req.body;
+
+    EnviarCorreo.verificarCodigo(codigo);
+    res.send("Codigo verificado")
+}
+
+exports.actualizarContrasenia = async (req, res) => {
+    const valida = validationResult(req);
+    var mensajes = {
+        mensaje: "",
+        data: []
+    };
+
+    if(!valida.isEmpty()){
+        mensajes.mensaje="Los datos ingresados no son válidos";
+        mensajes.data= valida.array();
+        return res.status(200).json(mensajes);
+   }else{
+
+        const {id}=req.params;
+        const {Contrasenia, Contrasenia2} = req.body;
+
+        if(Contrasenia===Contrasenia2){
+            var actualizarContra = await Clientes.update({
+                Contrasenia: Contrasenia
+            },
+            {
+                where:{
+                    Id_cliente:id
+                }
+            });
+
+            if(actualizarContra){
+                mensajes.mensaje="Contraseña actualizada correctamente";
+                res.status(200).json(mensajes);
+            }else{
+                mensajes.mensaje="Errror al actualizar la contraseña";
+                res.status(200).json(mensajes);
+            }
+        }
+        else{
+            mensajes.mensaje="Las contraseñas no coinciden";
+            res.status(200).json(mensajes);
+        }
+   }
+
+};
+/*//else{
+        /*const {correo, contrasenia,activo} = req.body;
+
         const buscar = await Clientes.findOne({
             where: {
-                correo:correo,
-                activo: true
+                Correo_cliente: correo,
+                Contrasenia: contrasenia,
+                Activo: activo
             }
         });
         if(buscar){
@@ -43,70 +167,6 @@ exports.iniciarSesion = async(req, res)=> {
             res.status(200).json(mensajes);
 
         }else{
-            mensajes.mensaje="Error";
+            mensajes.mensaje="Usuario inexistente";
             res.status(200).json(mensajes);
-        }
-    }
-};
-
-exports.regristrarCliente = async (req, res) => {
-    const {Nom_cliente, Tel_cliente, Correo_cliente, Contrasenia, Direc_cliente} = req.body;
-    var mensajes = {
-        estado: 200,
-        mensaje: "Datos ingresados correctamente",
-        data: []
-    };
-
-    if(Nom_cliente && Tel_cliente && Correo_cliente && Contrasenia && Direc_cliente){
-
-        var agregarCliente = await Clientes.create({
-            Nom_cliente: Nom_cliente,
-            Tel_cliente: Tel_cliente,
-            Correo_cliente,
-            Contrasenia: Contrasenia,
-            Direc_cliente: Direc_cliente
-        });
-        mensajes.data=agregarCliente;
-        res.status(200).json(mensajes);
-    }
-    else{
-        mensajes.mensaje="Faltan algunos datos necesarios";
-        res.status(200).json(mensajes);
-    }
-};
-
-exports.actualizarContrasenia = async (req, res) => {
-    const {id }=req.params;
-    const {Contrasenia1, Contrasenia2} = req.body;
-    var mensajes = {
-        estado: 200,
-        mensaje: "Contraseña actualizada",
-        data: []
-    };
-
-    if(Contrasenia1 && Contrasenia2 && Contrasenia1 === Contrasenia2){
-
-        var actualizarContra = await Clientes.update({
-            Contrasenia: Contrasenia1
-        },
-        {
-            where:{
-                id:Id_cliente
-            }
-        });
-        mensajes.data=actualizarContra;
-        res.status(200).json(mensajes);
-    }
-    else{
-        mensajes.mensaje="Faltan algunos datos necesarios";
-        res.status(200).json(mensajes);
-    }
-};
-
-/*
-emailjs.sendForm('service_s44mx25', 'template_wph7492', '#noidea')
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
-});*/
+        }*/ 

@@ -1,5 +1,4 @@
-const { Sequelize } = require('sequelize');
-const sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 const db = require('../config/conexionbd');
 const  medicinas_mascotas = db.define(
 "medicinas_mascotas",
@@ -8,25 +7,17 @@ const  medicinas_mascotas = db.define(
  {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: false,
-    references: {
-        model: medicina,
-        key: 'Id_medicina',
-        deferrable: Deferrable.INITIALLY_IMMEDIATE
-    }
+    foreignKey: true,
+    allowNull: false
  },
  Id_mascotas: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: false,
-    references: {
-        model: mascotas,
-        key: 'Id_mascotas',
-        deferrable: Deferrable.INITIALLY_IMMEDIATE
-    }
+    foreignKey: true,
+    allowNull: false
  },
     Cantidad: {
-        type: sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         alloNull: false,
     }
 },

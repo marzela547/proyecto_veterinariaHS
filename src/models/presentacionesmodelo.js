@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const Sequelize = require('sequelize');
 const db = require('../config/conexionbd');
 const  presentaciones = db.define(
 "presentaciones",
@@ -10,8 +10,8 @@ Id_presentaciones: {
     autoIncrement: true,
     allowNull: false
 },
-Descrip_presentacion: { 
-    type: sequelize.STRING(50),
+Descrip_presentacion: {
+    type: Sequelize.STRING(50),
     alloNull: false
 }
 },

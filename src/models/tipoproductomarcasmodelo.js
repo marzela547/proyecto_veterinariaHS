@@ -16,12 +16,8 @@ const TipoProductoMarca = bd.define(
         Id_marca: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            allowNull: false,
-            references: {
-                model: marcas,
-                key: 'Id_marca',
-                deferrable: Deferrable.INITIALLY_IMMEDIATE
-            }
+            foreignKey: true,
+            allowNull: false
         }
     },
     {

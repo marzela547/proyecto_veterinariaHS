@@ -1,21 +1,14 @@
-
-const Sequelize  = require('sequelize');
-const bcrypt = require('bcrypt');
+const Sequelize = require('sequelize');
 const db=require('../config/conexionbd');
+const bcrypt = require('bcrypt');
 const Clientes=db.define(
     "clientes",
     {
         Id_cliente:{
             type: Sequelize.INTEGER,
-            primarykey:true,
+            primaryKey:true,
             autoIncrement: true,
             allowNull: false,
-            validate: {
-                is:{
-                    args: [/^[0-9]+$/],
-                    msg: "ID del cliente invalido."
-                }
-            },
         },
         Nom_cliente:{
             type: Sequelize.STRING(45),
@@ -30,7 +23,6 @@ const Clientes=db.define(
             type: Sequelize.STRING(100),
             allowNull: false,
         },
-
         Contrasenia:{
             type: Sequelize.STRING(250),
             allowNull: false,
@@ -41,25 +33,28 @@ const Clientes=db.define(
             allowNull: false,
 
         },
+        Activo: {
+            type: Sequelize.STRING(3),
+            allowNull: true
+        }
     },
     {
         tableName: "clientes",
         timestamps: false,
-        hook: {
-            beforeCreate(cliente){
-                const hash = bcrypt.hashSync(cliente.contrasenia, 10);
-                cliente.contrasenia = hash;
+        hooks : {
+            beforeCreate(clientes) {
+              const hash = bcrypt.hashSync(clientes.Contrasenia, 10);
+              clientes.Contrasenia = hash;
             },
-            beforeUpdate(cliente) {
-                const hash = bcrypt.hashSync(cliente.contrasenia, 10);
-                cliente.contrasenia = hash;
+            beforeUpdate(clientes){
+                const hash = bcrypt.hashSync(clientes.Contrasenia, 10);
+                clientes.Contrasenia = hash;
             }
-        }
+          }
     }
 );
-
-Clientes.verificarContrasena=(con)=>{
-    return bcrypt.compareSync(con, this.contrasenia);
-}
+Clientes.prototype.verificarContrasena = (con, com)=>{
+    return bcrypt.compareSync(con, com);
+  }
 
 module.exports=Clientes;

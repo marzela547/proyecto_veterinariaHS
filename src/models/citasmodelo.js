@@ -1,29 +1,34 @@
-const { Sequelize } = require('sequelize');
+const Sequelize  = require('sequelize');
 const db=require('../config/conexionbd');
 const Citas=db.define(
     "citas",
     {
-        Id:{
+        Id_cita:{
             type: Sequelize.INTEGER,
-            primarykey:true,
+            primaryKey:true,
             autoIncrement: true,
             allowNull: false,
         },
         Fecha_cita:{
-            type: Sequelize.DATETIME,
+            type: Sequelize.DATE,
             allowNull: false,
         },
         Id_tipo_cita:{
             type: Sequelize.INTEGER,
-            foreingkey: true,
-            allowNull: false,
+            foreignKey: true,
+            allowNull: false
         },
         Id_cliente:{
             type: Sequelize.INTEGER,
-            foreingkey: true,
-            allowNull: false,
+            foreignKey: true,
+            allowNull: false
 
         },
+        Id_empleado:{
+            type: Sequelize.INTEGER,
+            foreignKey: true,
+            allowNull: false
+        }
 
     },
     {

@@ -6,22 +6,14 @@ const VacunasMascotas = bd.define(
         Id_vacuna: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            allowNull: false,
-            references: {
-                model: vacunas,
-                key: 'Id_vacuna',
-                deferrable: Deferrable.INITIALLY_IMMEDIATE
-            }
+            foreignKey: true,
+            allowNull: false
         },
         Id_mascotas: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            allowNull: false,
-            references: {
-                model: mascotas,
-                key: 'Id_mascotas',
-                deferrable: Deferrable.INITIALLY_IMMEDIATE
-            }
+            foreignKey: true,
+            allowNull: false
         },
         Cantidad_minima: {
             type: Sequelize.INTEGER,

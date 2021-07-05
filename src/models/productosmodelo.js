@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const Sequelize = require('sequelize');
 const db = require('../config/conexionbd');
 const  productos = db.define(
 "productos",
@@ -11,35 +11,29 @@ const  productos = db.define(
 
  },
  Descrip_producto: {
-    type: sequelize.STRING(70),
+    type: Sequelize.STRING(70),
     alloNull: false
 
  },
  Expiracion: {
-    type: sequelize.DATE, //hay que cambiarlo pk no se la variable
+    type: Sequelize.DATE, //hay que cambiarlo pk no se la variable
     alloNull: true
 
  },
  Cantidad: {
 
-    type: sequelize.INTEGER,
+    type: Sequelize.INTEGER,
     alloNull: true
  },
  Id_marca: {
-    type: sequelize.INTEGER,
-    alloNull: false,
-    references: {
-      model: marcas,
-      key: 'Id_marca',
-      deferrable: Deferrable.INITIALLY_IMMEDIATE
-  }
+    type: Sequelize.INTEGER,
+    foreignKey: true,
+    alloNull: false
  },
  Activo: {
-    type: sequelize.BOOLEAN,//hay que cambiarlo pk no se la variable
-    alloNull: false
-
+    type: Sequelize.STRING(3),//hay que cambiarlo pk no se la variable
+    alloNull: true
  }
-
 
 },
 {

@@ -1,5 +1,4 @@
-
-const Sequelize  = require('sequelize');
+const  Sequelize  = require('sequelize');
 const db=require('../config/conexionbd');
 const Empleados=db.define(
     "empleados",
@@ -11,34 +10,32 @@ const Empleados=db.define(
             allowNull: false,
         },
         Nom_empleado:{
-            type: Sequelize.VARCHAR(45),
+            type: Sequelize.STRING(45),
             allowNull: false,
         },
         Correo_empleado:{
-            type: Sequelize.VARCHAR(100),
+            type: Sequelize.STRING(100),
             allowNull: false,
         },
         Tel_empleado:{
-            type: Sequelize.VARCHAR(12),
+            type: Sequelize.STRING(12),
             allowNull: false,
 
         },
         Id_puesto:{
             type: Sequelize.INTEGER,
-            foreingkey: true,
-            allowNull: false,
+            foreignKey: true,
+            allowNull: false
 
         },
         Genero:{
-            type: Sequelize.VARCHAR(1),
+            type: Sequelize.STRING(1),
             allowNull: false,
-
         },
         Id_horario:{
             type: Sequelize.INTEGER,
-            foreingkey: true,
-            allowNull: false,
-
+            foreignKey: true,
+            allowNull: false
         },
         Fecha_contratacion:{
             type: Sequelize.DATE,
@@ -51,8 +48,8 @@ const Empleados=db.define(
 
         },
         Activo:{
-            type: Sequelize.TINYINTEGER(1),
-
+            type: Sequelize.STRING(3),
+            allowNull: true
         },
 
     },

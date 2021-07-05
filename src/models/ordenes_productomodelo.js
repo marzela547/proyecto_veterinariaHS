@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const Sequelize = require('sequelize');
 const db=require('../config/conexionbd');
 const  ordenes_producto = db.define(
 "ordenes_producto",
@@ -6,26 +6,17 @@ const  ordenes_producto = db.define(
 Id_orden:{
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: false,
-    references: {
-        model: ordenes,
-        key: 'Id_orden',
-        deferrable: Deferrable.INITIALLY_IMMEDIATE
-    }
+    foreignKey: true,
+    allowNull: false
 },
 Id_producto: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: false,
-    references: {
-        model: productos,
-        key: 'Id_producto',
-        deferrable: Deferrable.INITIALLY_IMMEDIATE
-    }
-
+    foreignKey: true,
+    allowNull: false
 },
 Cantidad: {
-    type: sequelize.STRING(45),
+    type: Sequelize.STRING(45),
     alloNull: false
 }
 },

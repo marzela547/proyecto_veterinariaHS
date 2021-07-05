@@ -1,37 +1,45 @@
-const { Sequelize } = require('sequelize');
+const  Sequelize  = require('sequelize');
 const db=require('../config/conexionbd');
 const Mascotas=db.define(
     "mascotas",
     {
         Id_mascotas:{
             type: Sequelize.INTEGER,
-            primarykey:true,
+            primaryKey:true,
             autoIncrement: true,
             allowNull: false,
-        }, 
+        },
         Nom_mascotas:{
-            type: Sequelize.VARCHAR(45),
+            type: Sequelize.STRING(45),
+            allowNull: false,
+        },
+        Edad:{
+            type: Sequelize.STRING(10),
             allowNull: false,
         },
         Peso:{
-            type: Sequelize.VARCHAR(45),
-            allowNull: false,
+            type: Sequelize.STRING(45),
+            allowNull: true,
         },
         Altura:{
-            type: Sequelize.VARCHAR(45),
-            allowNull: false,
+            type: Sequelize.STRING(45),
+            allowNull: true,
 
         },
         Id_raza:{
             type: Sequelize.INTEGER,
-            foreingkey:true,
-            allowNull: false,
+            foreignKey: true,
+            allowNull: false
         },
         Id_cliente:{
             type: Sequelize.INTEGER,
-            foreingkey:true,
-            allowNull: false,
+            foreignKey: true,
+            allowNull: false
         },
+        Activa:{
+            type: Sequelize.STRING(3),
+            allowNull: true
+        }
     },
     {
         tableName: "mascotas",

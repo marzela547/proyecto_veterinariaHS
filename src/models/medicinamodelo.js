@@ -1,22 +1,21 @@
-const { Sequelize } = require('sequelize');
+const  Sequelize  = require('sequelize');
 const db=require('../config/conexionbd');
 const Medicina=db.define(
     "medicinas",
     {
         Id_medicina:{
             type: Sequelize.INTEGER,
-            primarykey:true,
+            primaryKey:true,
             autoIncrement: true,
             allowNull: false,
         },
         Descrip_medicina:{
-            type: Sequelize.VARCHAR(50),
+            type: Sequelize.STRING(50),
             allowNull: false,
         },
-
     },
     {
-        tableName: "medicinas",
+        tableName: "medicina",
         timestamps: false,
     }
 );
