@@ -11,6 +11,7 @@ exports.detallesMascota = async(req, res) =>{
     var i = 0;
     const busvacunas = Array();
     const busmedicinas = Array();
+    const busFechas = Array();
     const busDetalles = [];
     const detalles = await Mascotas.findOne({
         where:{
@@ -92,8 +93,10 @@ exports.detallesMascota = async(req, res) =>{
         }else{
             console.log("Su mascota no toma medicinas");
         }
+        busFechas.push(vacuna);
         busDetalles.push(detalles.Edad);
         busDetalles.push(busvacunas);
+        busDetalles.push(busFechas);
         busDetalles.push(busmedicinas);
         busDetalles.push(detalles.Peso);
         busDetalles.push(detalles.Altura);

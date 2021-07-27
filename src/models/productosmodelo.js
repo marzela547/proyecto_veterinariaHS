@@ -16,7 +16,7 @@ const  productos = db.define(
 
  },
  Expiracion: {
-    type: Sequelize.DATE, //hay que cambiarlo pk no se la variable
+    type: Sequelize.DATE,
     alloNull: true
 
  },
@@ -31,7 +31,7 @@ const  productos = db.define(
     alloNull: false
  },
  Activo: {
-    type: Sequelize.STRING(3),//hay que cambiarlo pk no se la variable
+    type: Sequelize.STRING(3),
     alloNull: true
  }
 

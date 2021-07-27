@@ -86,3 +86,23 @@ exports.facturar = async(req, res) => {
         res.status(200).json(mensajes);
    }
 }
+
+exports.especifico = async(req, res) => {
+    const { id } = req.params;
+    if (id) {
+        const pdetalles = await Productos.findOne({
+            where: {
+                Id_producto: id,
+                Activo:"ACT"
+            }
+        });
+
+        if (pdetalles) {
+            res.json(pdetalles);
+        } else {
+            res.send("No se encontro el producto");
+        }
+    } else {
+        res.send("No se encontro el prodcuto");
+    }
+};

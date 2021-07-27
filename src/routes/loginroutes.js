@@ -36,7 +36,7 @@ router.post('/registro',  body('Correo_cliente').isEmail().withMessage('Formato 
             ).withMessage('El correo ya se encuentra en uso'), controladorlogin.regristrarCliente);
 
 router.post('/enviar', controladorlogin.enviarCodigo);
-router.post('/verificar', controladorlogin.envioCodigo);
+router.post('/verificar', controladorlogin.verificaCodigo);
 router.put('/recuperar/:id', body('Contrasenia').isLength({min: 8}).withMessage("Contraseña debe tener mínimo 8 caracteres"), controladorlogin.actualizarContrasenia);
 function validarAutenticado(req, res, next) {
     if(req.isAuthenticated()){

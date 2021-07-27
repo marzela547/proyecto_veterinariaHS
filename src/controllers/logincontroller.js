@@ -2,6 +2,8 @@ const Clientes = require('../models/clientesmodelo');
 const { validationResult } = require('express-validator');
 const EnviarCorreo = require('../config/correo');
 
+var identidad = "g";
+
 exports.lista= async(req, res) =>{
 
     var mensajes = {
@@ -100,15 +102,24 @@ exports.enviarCodigo = async (req, res) =>{
         correo: buscar.Correo_cliente
     }
 
+    const data2 = {
+        mensaje: "Correo enviado",
+        cliente: buscar.Id_cliente
+    }
+
+    identidad = data2.cliente;
+
     EnviarCorreo.recuperarContrasena(data);
-    res.send("Correo enviado");
+    res.send(data2);
 }
 
-exports.envioCodigo = async(req, res)=>{
+exports.verificaCodigo = async(req, res)=>{
     const codigo = req.body;
 
     EnviarCorreo.verificarCodigo(codigo);
     res.send("Codigo verificado")
+
+    console.log(identidad);
 }
 
 exports.actualizarContrasenia = async (req, res) => {
@@ -124,7 +135,7 @@ exports.actualizarContrasenia = async (req, res) => {
         return res.status(200).json(mensajes);
    }else{
 
-        const {id}=req.params;
+        const {id} = req.params;
         const {Contrasenia, Contrasenia2} = req.body;
 
         if(Contrasenia===Contrasenia2){
@@ -141,7 +152,7 @@ exports.actualizarContrasenia = async (req, res) => {
                 mensajes.mensaje="Contraseña actualizada correctamente";
                 res.status(200).json(mensajes);
             }else{
-                mensajes.mensaje="Errror al actualizar la contraseña";
+                mensajes.mensaje="Error al actualizar la contraseña";
                 res.status(200).json(mensajes);
             }
         }
@@ -152,21 +163,3 @@ exports.actualizarContrasenia = async (req, res) => {
    }
 
 };
-/*//else{
-        /*const {correo, contrasenia,activo} = req.body;
-
-        const buscar = await Clientes.findOne({
-            where: {
-                Correo_cliente: correo,
-                Contrasenia: contrasenia,
-                Activo: activo
-            }
-        });
-        if(buscar){
-            mensajes.mensaje="El usuario si existe";
-            res.status(200).json(mensajes);
-
-        }else{
-            mensajes.mensaje="Usuario inexistente";
-            res.status(200).json(mensajes);
-        }*/ 

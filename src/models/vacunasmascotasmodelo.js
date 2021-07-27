@@ -18,6 +18,14 @@ const VacunasMascotas = bd.define(
         Cantidad_minima: {
             type: Sequelize.INTEGER,
             allowNull: true
+        },
+        Fecha_primera: {
+            type: Sequelize.DATE,
+            allowNull: true
+        },
+        Fecha_segunda: {
+            type: Sequelize.DATE,
+            allowNull: true
         }
     },
     {
